@@ -39,8 +39,8 @@ env/
 .DS_Store
 Thumbs.db
 
-# PDF files (but keep folder structure)
+# PDF files 
 *.pdf
 
-# Result files (optional - remove this line if you want to track results)
+# Result files 
 Result.txt
