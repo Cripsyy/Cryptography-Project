@@ -90,7 +90,7 @@ def format_huffman_line(row, max_parent_levels):
 def append_huffman_table(report_path, table, max_parent_levels):
 	with open(report_path, "a", encoding="utf-8") as f:
 		f.write("\n" + "#" * 60 + "\n")
-		f.write("PART 3: HUFFMAN CODING TABLE\n")
+		f.write("PART 4: HUFFMAN CODING TABLE\n")
 		f.write("#" * 60 + "\n")
 
 		header = f"{'Letter':<10} | {'Probability':<12}"
