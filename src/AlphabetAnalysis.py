@@ -1,4 +1,4 @@
-import pdfplumber
+import fitz
 import unicodedata
 import os
 
@@ -54,20 +54,16 @@ def analyze_pdfs(folder_path, output_txt):
         print(f"Reading: {filename}...")
 
         try:
-            with pdfplumber.open(file_path) as pdf:
-                for page in pdf.pages:
-                    for char_obj in page.chars:
-                        raw_char = char_obj['text'].lower()
+            with fitz.open(file_path) as doc:
+                for page in doc:
+                    text = page.get_text().lower()
+                    text = unicodedata.normalize('NFC', text).replace('ş', 'ș').replace('ţ', 'ț')
 
-                        normalized = unicodedata.normalize('NFC', raw_char)
-                        mapping = {'ş': 'ș', 'ţ': 'ț'}
-                        final_char = mapping.get(normalized, normalized)
-
-                        if final_char in file_data[filename]:
-                            file_data[filename][final_char] += 1
+                    for char in text:
+                        if char in file_data[filename]:
+                            file_data[filename][char] += 1
                             file_count += 1
-
-                            total_map[final_char] += 1
+                            total_map[char] += 1
                             total_letters += 1
 
             file_data[filename]['__total__'] = file_count
