@@ -94,7 +94,7 @@ def analyze_pdfs(folder_path, output_txt):
                 prob = metrics[char]["probability"]
                 perc_sum += perc
                 prob_sum += prob
-                f.write(f"{char:<10} | {count:<10} | {prob:<11.6f} | {perc:<10.6f}%\n")
+                f.write(f"{char:<10} | {count:<10} | {prob:<11.6f} | {f'{perc:.6f}%':<10}\n")
             f.write("\n" + "=" * 60 + "\n\n")
 
         f.write("\n" + "#" * 60 + "\n")
@@ -116,7 +116,7 @@ def analyze_pdfs(folder_path, output_txt):
             prob = total_metrics[char]["probability"]
             perc_sum += perc
             prob_sum += prob
-            f.write(f"{char:<10} | {count:<10} | {prob:<11.6f} | {perc:<10.6f}%\n")
+            f.write(f"{char:<10} | {count:<10} | {prob:<11.6f} | {f'{perc:.6f}%':<10}\n")
 
         perc_items = [f"{total_metrics[char]['percentage']:.6f}%" for char, _ in sorted_grand]
         prob_items = [f"{total_metrics[char]['probability']:.6f}" for char, _ in sorted_grand]

@@ -133,7 +133,7 @@ def format_information_metrics_report(method_name, metrics):
 		f"Redundancy R:           {metrics['redundancy']:.6f}",
 		f"Entropy H(S):           {metrics['entropy']:.6f}",
 		f"Maximum Entropy H_max:  {metrics['max_entropy']:.6f}",
-		f"Theorem Verification:   {metrics['theorem_message']}({metrics['theorem_holds']})"
+		f"Theorem Verification:   {metrics['theorem_message']}({metrics['theorem_holds']})",
 		"-" * 60,
 		"Intermediate Steps:",
 		f"H(S):                   {metrics['calculation_steps']['entropy']['expression']} = {metrics['calculation_steps']['entropy']['result']}",
