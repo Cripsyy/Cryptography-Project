@@ -65,10 +65,6 @@ def calculate_information_metrics(probabilities, coding_dict):
 	# Relative redundancy: R = 1 - eta
 	redundancy = 1.0 - efficiency
 
-	# Maximum entropy for equiprobable alphabet
-	n = len(probabilities)
-	max_entropy = math.log2(n) if n > 0 else 0.0
-
 	# Fundamental theorem check: H(S) <= L_bar < H(S) + 1
 	lower_ok = average_code_length + epsilon >= entropy
 	upper_ok = average_code_length < (entropy + 1.0 + epsilon)
@@ -88,7 +84,6 @@ def calculate_information_metrics(probabilities, coding_dict):
 		"average_code_length": _round6(average_code_length),
 		"efficiency": _round6(efficiency),
 		"redundancy": _round6(redundancy),
-		"max_entropy": _round6(max_entropy),
 		"theorem_holds": theorem_holds,
 		"theorem_message": theorem_message,
 		"calculation_steps": {
@@ -110,10 +105,6 @@ def calculate_information_metrics(probabilities, coding_dict):
 				"expression": f"1 - {_round6(efficiency):.6f}",
 				"result": f"{_round6(redundancy):.6f}",
 			},
-			"max_entropy": {
-				"expression": f"log2({n})",
-				"result": f"{_round6(max_entropy):.6f}",
-			},
 			"theorem_verification": {
 				"expression": f"{_round6(entropy):.6f} <= {_round6(average_code_length):.6f} < {_round6(entropy + 1.0):.6f}",
 				"result": theorem_holds,
@@ -132,12 +123,10 @@ def format_information_metrics_report(method_name, metrics):
 		f"Efficiency eta:         {metrics['efficiency']:.6f}",
 		f"Redundancy R:           {metrics['redundancy']:.6f}",
 		f"Entropy H(S):           {metrics['entropy']:.6f}",
-		f"Maximum Entropy H_max:  {metrics['max_entropy']:.6f}",
 		f"Theorem Verification:   {metrics['theorem_message']}({metrics['theorem_holds']})",
 		"-" * 60,
 		"Intermediate Steps:",
 		f"H(S):                   {metrics['calculation_steps']['entropy']['expression']} = {metrics['calculation_steps']['entropy']['result']}",
-		f"H_Max:	              {metrics['calculation_steps']['max_entropy']['expression']} = {metrics['calculation_steps']['max_entropy']['result']}",
 		f"L_bar:                  {metrics['calculation_steps']['average_code_length']['expression']} = {metrics['calculation_steps']['average_code_length']['result']}",
 		f"eta:                    {metrics['calculation_steps']['efficiency']['expression']} = {metrics['calculation_steps']['efficiency']['result']}",
 		f"R:                      {metrics['calculation_steps']['redundancy']['expression']} = {metrics['calculation_steps']['redundancy']['result']}",

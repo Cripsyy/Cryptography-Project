@@ -48,11 +48,25 @@ def decode_text(encoded_string, codes_dict):
 	return "".join(decoded_chars)
 
 
+def get_original_bit_size(text):
+	total_bits = 0
+	diacritics = "ăâîșțĂÂÎȘȚ"
+
+	for char in text:
+		if char in diacritics:
+			total_bits += 16
+		else:
+			total_bits += 8
+	return total_bits
+
 def display_encoding_results(text, method_name, codes_dict, encoded_list, encoded_string, decoded_text):
 	"""Display encoding results in formatted manner."""
 	print(f"\n{'='*80}")
 	print(f"         {method_name.upper()} ENCODING RESULTS")
 	print(f"{'='*80}")
+
+	original_alpha_text = "".join(c for c in text if c.isalpha())
+	original_bit_size = get_original_bit_size(original_alpha_text)
 	
 	print(f"\n--- Individual Character Encodings ---")
 	for char, code in encoded_list:
@@ -63,9 +77,10 @@ def display_encoding_results(text, method_name, codes_dict, encoded_list, encode
 	
 	print(f"\n--- Statistics ---")
 	print(f"  Original text length:  {len([c for c in text.lower() if c.isalpha()])} characters")
+	print(f"  Original bit length:   {original_bit_size} bits")
 	print(f"  Encoded binary length: {len(encoded_string)} bits")
-	if len(encoded_string) > 0:
-		compression = (1 - len(encoded_string) / (len([c for c in text.lower() if c.isalpha()]) * 8)) * 100
+	if len(encoded_string) > 0 and original_bit_size > 0:
+		compression = (1 - len(encoded_string) / original_bit_size) * 100
 		print(f"  Compression:           {compression:.2f}%")
 	
 	print(f"\n--- Decoded Text ---")
