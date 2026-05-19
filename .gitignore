@@ -39,8 +39,5 @@ env/
 .DS_Store
 Thumbs.db
 
-# PDF files 
-*.pdf
-
-# Result files 
+# Result files
 Result.txt
